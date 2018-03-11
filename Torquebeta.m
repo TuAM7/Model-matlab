@@ -54,7 +54,7 @@ hold off
 
 Pl=z(x)*x  %% Electric power into the motor at E(3) emf value
 Pm=z(x)*E(3); %%Mechanical power at E(3) emf value
-T=Pm/750*1000; %%Torque at certain speed and Emf
+T=Pm/750; %%Torque at certain speed and Emf [Nm]
 
 %% in a separate script file
 function x=SolarPaneleq(Ua)
