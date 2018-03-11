@@ -1,7 +1,3 @@
-clear all
-clc
-close all
-
 %%Data sheet
 Tms=23.2; %%Stall torque [nNm]
 Ra=3.32; %%Terminal Resistance [Ohm]
@@ -36,23 +32,10 @@ hold off
 
 % Just trying to build up the solution, and see if it works, before making
 % it in a loop
-
-%Solar panel data (mixing together the two script (I know that this is not
-%the right way)
-Is=1*10^-8; %%Reverse saturation current [A]
-N=16;
-k=1.38*10^-23;  %%Boltzmann constant [J/K]
-q=1.6*10^-19;  %%charge of an electron [As]
-T=300;  %%Temperature [K]
-Ur=(k*T)/q;  %%Thermal voltage [V]
-Uoc=9.47; %%Open circuit voltage [V]
-Isc=0.860; %%Short-cicuit current [A] measured
-m=1.13;
-
 z=@(Ua) (Ua-E(3))/Ra; %% DC motor
-v=@(Ua) Isc-Is*(exp(Ua/(m*Ur*N))-1); %% Solar panel
+sp=@SolarPaneleq; %% Solar panel
 
-y=@(Ua) v(Ua)-z(Ua); %% DCmotor-Solarpanel characteristic
+y=@(Ua) sp(Ua)-z(Ua); %% DCmotor-Solarpanel characteristic
 plot(Ua,y(Ua))
 grid;
 ylim([0 0.9]);
@@ -65,10 +48,28 @@ plot(Ua,z(Ua))
 xlim([0 10]);
 ylim([0 1]);
 hold on
-plot(Ua,v(Ua))
+plot(Ua,sp(Ua))
 grid;
 hold off
 
-Pl=z(x)*x;  %% Electric power into the motor at E(3) emf value
+Pl=z(x)*x  %% Electric power into the motor at E(3) emf value
 Pm=z(x)*E(3); %%Mechanical power at E(3) emf value
 T=Pm/750*1000; %%Torque at certain speed and Emf
+
+%% in a separate script file
+function x=SolarPaneleq(Ua)
+
+%%data
+Is=1*10^-8; %%Reverse saturation current [A]
+N=16;
+k=1.38*10^-23;  %%Boltzmann constant [J/K]
+q=1.6*10^-19;  %%charge of an electron [As]
+T=300;  %%Temperature [K]
+Ur=(k*T)/q;  %%Thermal voltage [V]
+Uoc=9.47; %%Open circuit voltage [V]
+Isc=0.860; %%Short-cicuit current [A] measured
+m=1.13; %% Diode factor, average value
+
+x=Isc-Is*(exp(Ua/(m*Ur*N))-1);
+
+end
