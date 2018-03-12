@@ -26,25 +26,25 @@ sE=numel(E);
 %working point values
 u=[];
 for j=1:1:sE
-dcm=@(Ua) (Ua-E(1,j))/Ra; %% DC motor
-sp=@SolarPaneleq; %% Solar panel
-common=@(Ua) sp(Ua)-dcm(Ua); %% DCmotor-Solarpanel characteristic
-
-u0=3;
-u1=fzero(common,u0); %%u value at intersection
-
-
-plot(Ua,dcm(Ua),'linewidth',lw)
-hold on
-xlim([0 10]);
-xlabel('U [V]');
-ylim([0 1]);
-ylabel('I [A]');
-title('Solar panel and DC motor working points');
-plot(Ua,sp(Ua),'-k','linewidth',lw)
-grid;
-
-u=[u,u1]; %%U value at intersection points
+    dcm=@(Ua) (Ua-E(1,j))/Ra; %% DC motor
+    sp=@SolarPaneleq; %% Solar panel
+    common=@(Ua) sp(Ua)-dcm(Ua); %% DCmotor-Solarpanel characteristic
+    
+    u0=3;
+    u1=fzero(common,u0); %%u value at intersection
+    
+    
+    plot(Ua,dcm(Ua),'linewidth',lw)
+    hold on
+    xlim([0 10]);
+    xlabel('U [V]');
+    ylim([0 1]);
+    ylabel('I [A]');
+    title('Solar panel and DC motor working points');
+    plot(Ua,sp(Ua),'-k','linewidth',lw)
+    grid;
+    
+    u=[u,u1]; %%U value at intersection points
 end
 hold off
 dcm(u); %% I value at intersection
