@@ -13,6 +13,7 @@ classdef SolarPanel
     methods
         function obj = SolarPanel(m)
             obj.m = m;
+            obj.Ur=(obj.q)/(
         end
         function I = current(obj,Isc,U)
             I = Isc - obj.Is*(exp(U/(obj.m*obj.Ur*obj.N))-1);
