@@ -14,7 +14,7 @@ classdef Track
             p = [-25./16 15./8 0 0];
             H = zeros(size(x));
             
-            for i = 2:numel(x)
+            for i = 1:numel(x)
                 if x(i) < obj.bumpStart || x(i) > obj.bumpStart + obj.bumpLength
                     H(i) = 0;
                 elseif x(i) < obj.bumpStart + 0.8
@@ -29,7 +29,7 @@ classdef Track
         function S = slope(obj,x)
             S = zeros(size(x));
             p = polyder([-25./16 15./8 0 0]);
-            for i = 2:numel(x)
+            for i = 1:numel(x)
                 if (x(i) > obj.bumpStart && x(i) < obj.bumpStart + 0.8)
                     S(i) = polyval(p,x(i)-obj.bumpStart);
                 elseif (x(i) > obj.bumpStart + obj.bumpLength - 0.8 && x(i) < obj.bumpStart + obj.bumpLength)
@@ -38,7 +38,7 @@ classdef Track
                     S(i) = 0;
                 end
             end
-            S = radtodeg(atan(S));
+            S = atan(S);
         end
     end
 end

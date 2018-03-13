@@ -8,12 +8,10 @@ mu=0.54; %% friction coefficient ????
 Tm=0.0047; %%motor torque [Nm] - from torque
 a=20; %% acceleration [m/s^2]
 
-%% linking the track slope degrees 
-track=Track(); 
+%% linking the track slope degrees ; 
 trackLength = 7;
-track.bumpLength = 2.2;
-track.bumpStart = rand(1)*(trackLength-track.bumpLength);
-track.bumpHeight = 0.4;
+
+track = Track(rand(1)*(trackLength-2.2),2.2, 0.4);
 %% Determining the degrees of the slope at different places of the track
 alfa=[];
 for x=0:0.1:7

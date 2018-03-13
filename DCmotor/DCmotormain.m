@@ -13,7 +13,7 @@ sE=numel(E);
 
 lw=2;
 Ua=0:0.00001:10;
-%%plotting DC motor characteristics for different w
+%% plotting DC motor characteristics for different w
 for i=1:1:sE
    Ia=(Ua-E(1,i))/dc.Ra;
    plot(Ua,Ia,'linewidth',lw)

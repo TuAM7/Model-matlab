@@ -10,7 +10,7 @@ title('Slope polynomial');
 
 %% Track function
 trackLength = 7;
-track = Track(rand(1)*(trackLength-2.2),2.2, 0.4);
+track = Track(3,2.2, 0.4);
 
 subplot(2,3,[2,3]) 
 fplot(@(x) track.height(x),[0,trackLength]);
@@ -24,5 +24,5 @@ subplot(2,3,[5,6])
 fplot(@(x) track.slope(x),[0,trackLength]);
 ylim([0 inf]);
 xlabel('position (m)');
-ylabel('slope (degrees)');
+ylabel('slope (radians)');
 title('Track slope');
