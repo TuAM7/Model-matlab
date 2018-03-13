@@ -5,6 +5,11 @@ classdef Track
         bumpHeight
     end
     methods
+        function obj = Track(bumpStart,bumpLength,bumpHeight)
+            obj.bumpStart=bumpStart;
+            obj.bumpLength=bumpLength;
+            obj.bumpHeight=bumpHeight;
+        end
         function h = height(obj,x)
             p = [-25./16 15./8 0 0];
             if x < obj.bumpStart || x > obj.bumpStart + obj.bumpLength
