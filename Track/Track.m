@@ -10,29 +10,35 @@ classdef Track
             obj.bumpLength=bumpLength;
             obj.bumpHeight=bumpHeight;
         end
-        function h = height(obj,x)
+        function H = height(obj,x)
             p = [-25./16 15./8 0 0];
-            if x < obj.bumpStart || x > obj.bumpStart + obj.bumpLength
-                h = 0;
-            elseif x < obj.bumpStart + 0.8
-                h = polyval(p,x-obj.bumpStart);
-            elseif x < obj.bumpStart + obj.bumpLength - 0.8
-                h = obj.bumpHeight;
-            else
-                h = polyval(p,-x+obj.bumpStart+obj.bumpLength);
+            H = zeros(size(x));
+            
+            for i = 2:numel(x)
+                if x(i) < obj.bumpStart || x(i) > obj.bumpStart + obj.bumpLength
+                    H(i) = 0;
+                elseif x(i) < obj.bumpStart + 0.8
+                    H(i) = polyval(p,x(i)-obj.bumpStart);
+                elseif x(i) < obj.bumpStart + obj.bumpLength - 0.8
+                    H(i) = obj.bumpHeight;
+                else
+                    H(i) = polyval(p,-x(i)+obj.bumpStart+obj.bumpLength);
+                end
             end
         end
-        function s = slope(obj,x)
+        function S = slope(obj,x)
+            S = zeros(size(x));
             p = polyder([-25./16 15./8 0 0]);
-            if (x > obj.bumpStart && x < obj.bumpStart + 0.8)
-                s = polyval(p,x-obj.bumpStart);
-            elseif (x > obj.bumpStart + obj.bumpLength - 0.8 && x < obj.bumpStart + obj.bumpLength)
-                s = polyval(p,-x+obj.bumpStart+obj.bumpLength);
-            else
-                s = 0;
+            for i = 2:numel(x)
+                if (x(i) > obj.bumpStart && x(i) < obj.bumpStart + 0.8)
+                    S(i) = polyval(p,x(i)-obj.bumpStart);
+                elseif (x(i) > obj.bumpStart + obj.bumpLength - 0.8 && x(i) < obj.bumpStart + obj.bumpLength)
+                    S(i) = polyval(p,-x(i)+obj.bumpStart+obj.bumpLength);
+                else
+                    S(i) = 0;
+                end
             end
-            
-            s = radtodeg(atan(s));
+            S = radtodeg(atan(S));
         end
     end
 end
