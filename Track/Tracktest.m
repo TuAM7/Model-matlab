@@ -10,12 +10,7 @@ title('Slope polynomial');
 
 %% Track function
 trackLength = 7;
-
-track = Track;
-track.bumpLength = 2.2;
-track.bumpStart = rand(1)*(trackLength-track.bumpLength);
-track.bumpHeight = 0.4;
-
+track = Track(rand(1)*(trackLength-2.2),2.2, 0.4);
 
 subplot(2,3,[2,3]) 
 fplot(@(x) track.height(x),[0,trackLength]);
