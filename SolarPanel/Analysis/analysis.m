@@ -21,11 +21,15 @@ fun = @(m)(Isc - Is.*(exp(data(:,1)./(m.*Ur.*N))-1)-data(:,2));
 m = lsqnonlin(fun,1)
 
 %% Plot!
+sp = SolarPanel(m)
+
 f1 = figure('Name','Solar panel characteristics','NumberTitle','off');
 subplot(2,1,1) 
 hold on
 axis([0 10 0 floor(Isc*10)/10+0.1])
-fplot(@(U) current(m,Isc,Is,U,Ur,N))
+U = 0:0.1:10;
+I = sp.current(Isc,U);
+plot(U,I)
 plot(data(:,1),data(:,2),'x')
 title('Current over voltage')
 xlabel('Voltage (V)');
@@ -37,15 +41,12 @@ subplot(2,1,2)
 
 hold on
 axis([0 10 0 3])
-fplot(@(U) current(m,Isc,Is,U,Ur,N)*U)
+U = 0:0.1:10;
+I = sp.current(Isc,U);
+plot(U,I.*U)
 
 title('Power over voltage')
 xlabel('Voltage (V)')
 ylabel('Power (W)')
 plot(data(:,1),power, 'x')
 hold off;
-
-%% Function definitions
-function I = current(m,Isc,Is,U,Ur,N)
-    I = Isc - Is.*(exp(U./(m.*Ur.*N))-1);
-end
