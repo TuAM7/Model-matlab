@@ -11,11 +11,12 @@ for w=0:250:1000
 end 
 sE=numel(E);
 
-Ua=0:10;
+lw=2;
+Ua=0:0.00001:10;
 %%plotting DC motor characteristics for different w
 for i=1:1:sE
    Ia=(Ua-E(1,i))/dc.Ra;
-   plot(Ua,Ia)
+   plot(Ua,Ia,'linewidth',lw)
    grid;
    xlabel('U [V]');
    ylabel('I [A]');
@@ -24,4 +25,6 @@ for i=1:1:sE
    xlim([0 10]);
    hold on
 end
+sp=SolarPaneleq(Ua);
+plot(Ua, sp, '-k','linewidth',lw)
 hold off
