@@ -3,7 +3,9 @@
 %will have to be reworked into a function (with inputs and outputs) in
 %order to investigate the effect of a parameter on the movement of the car
  
- 
+addpath ./DCmotor
+addpath ./SolarPanel
+addpath ./Track
  
 %starting with a clean slate.  
 %!to be removed if you want to rework this into an input-output function!
@@ -18,44 +20,28 @@ clc
 %definition of variables.
 %you can add additional variables if needed
 %!values have to be changed but variable names have to remain identical
- 
- 
-%car parameters
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%To Do add correct values              %
-%To Do add additional parameters       %
-%To Do add correct units and comments  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-car.Mssv = 0.3;            %[kg] mass of the SSV
-car.gear_ratio = 1;      %[] gear ratio: input/output   (motor speed /wheel axel speed)
-%add aditional car paramters
- 
-% parameter of solar panel
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%To Do add correct values              %
-%To Do add additional parameters       %
-%To Do add correct units and comments  %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
- 
-panel = SolarPanel(1.271);
+car.Mssv = 1;             % [kg] mass of the SSV
+car.gear_ratio = 0.2;        % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.frc = 0.3;              % Friction coef
+car.pulley_radius = 0.025;
+
+panel = SolarPanel(1.271,0.36);
 
 motor = DCmotor();
 
-track = Track(3,2.2, 0.4);
- 
-%%%%%%%%%%%%%%%%%%%%
-       
+track = Track(3, 2.2, 0.0);
+
+
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]
 dx0 = 0;  %[m/s]
- 
- 
+
  
 %call the ode45 function in order to solve the differential equation problem
-endTime = 20; %[sec] overall time you want the simulation to run for 
+endTime = 5; %[sec] overall time you want the simulation to run for 
 %e.g. simulate the movement of the car from 0 to 10 sec
-[timeOut,Pout]=ode45(@(t,P)difEqCar(t,P,car,panel,motor,track),endTime,[x0 dx0]);
+[timeOut,Pout]=ode45(@(t,P) difEqCar(t,P,car,panel,motor,track),[0 endTime],[x0 dx0]);
 %using ode45 to numerically solve the differential equations from time 0 to
 %end time 
 %initial conditions set by x0 and dx0;
@@ -69,11 +55,20 @@ endTime = 20; %[sec] overall time you want the simulation to run for
 %post processing of the results
 %e.g.
 f1=figure;  %create a new figure which is referred to as f1
+subplot(2,1,1)
 plot(timeOut,Pout(:,1))  %creates of plot of the position of the car as a function of time, (all rows first column is selected for Xout)
 grid on;
 title('position of the car on the track over time')
 xlabel('time [sec]')
 ylabel('position [m]')
+
+subplot(2,1,2)
+plot(Pout(:,1),Pout(:,2)) 
+grid on;
+axis([0 7 0 inf])
+title('Velocity of the car on the track ')
+xlabel('position [m]')
+ylabel('velocity [m/s]')
  
  
 %some more processing to return the time the car needed to reach the end of
@@ -82,50 +77,5 @@ ylabel('position [m]')
 %define and create multiple files that generate different
 %output values/graphs
 
- 
- 
- 
- 
 
 
-
-
-
-
-
-
-
-
-
-
-
-% addpath ./SolarPanel
-% addpath ./Track
-% addpath ./DCmotor
-% 
-% sp = SolarPanel(1.271)
-% 
-% trackLength = 7;
-% bumpStart = 3;
-% bumpLength = 2.2;
-% bumpHeight = 0.4;
-% track = Track(bumpStart,bumpLength, bumpHeight)
-% 
-% xspan = 0:0.1:trackLength;
-% y0 = [0 0];
-% [x,y] = ode45(@(x,y) car(x,y,track), xspan, y0)
-% 
-% 
-% plot(x,y(:,2),'-')
-% title('Distance travelled and velocity over time')
-% xlabel('Distance')
-% legend('velocity')
-% 
-% 
-% function dX = car(x, X, track)
-%     P = 1; % motor force
-%     F = P - 0.3*9.81*sin(track.slope(x));
-%     a = F/0.3;
-%     dX(1,1) = X(2,1);  % speed is the derivative of position
-%     dX(2,1) = a;       % acceleration is the derivative of speed
-% end

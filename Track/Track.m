@@ -33,7 +33,7 @@ classdef Track
                 if (x(i) > obj.bumpStart && x(i) < obj.bumpStart + 0.8)
                     S(i) = polyval(p,x(i)-obj.bumpStart);
                 elseif (x(i) > obj.bumpStart + obj.bumpLength - 0.8 && x(i) < obj.bumpStart + obj.bumpLength)
-                    S(i) = polyval(p,-x(i)+obj.bumpStart+obj.bumpLength);
+                    S(i) = -polyval(p,-x(i)+obj.bumpStart+obj.bumpLength);
                 else
                     S(i) = 0;
                 end

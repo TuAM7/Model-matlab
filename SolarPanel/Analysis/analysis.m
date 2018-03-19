@@ -1,5 +1,5 @@
 %% Parse excel data
-data = xlsread('readings.xlsx')
+data = xlsread('readings.xlsx');
 
 shortCircuit = isnan(data);
 a_Isc = data(shortCircuit,:);
@@ -21,14 +21,14 @@ fun = @(m)(Isc - Is.*(exp(data(:,1)./(m.*Ur.*N))-1)-data(:,2));
 m = lsqnonlin(fun,1)
 
 %% Plot!
-sp = SolarPanel(m)
+sp = SolarPanel(m,Isc);
 
 f1 = figure('Name','Solar panel characteristics','NumberTitle','off');
 subplot(2,1,1) 
 hold on
 axis([0 10 0 floor(Isc*10)/10+0.1])
 U = 0:0.1:10;
-I = sp.current(Isc,U);
+I = sp.current(U);
 plot(U,I)
 plot(data(:,1),data(:,2),'x')
 title('Current over voltage')
@@ -42,7 +42,7 @@ subplot(2,1,2)
 hold on
 axis([0 10 0 3])
 U = 0:0.1:10;
-I = sp.current(Isc,U);
+I = sp.current(U);
 plot(U,I.*U)
 
 title('Power over voltage')

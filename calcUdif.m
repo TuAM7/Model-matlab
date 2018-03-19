@@ -15,5 +15,9 @@ function Udif = calcUdif(U_test,v,C,S,M)
 %S:     structure containing parameters of the solar panel
 %M:     structure containing parameters of the motor
 
+ang_vel = v./(C.gear_ratio.*C.pulley_radius);
+back_emf = M.emf(ang_vel);
+U = back_emf + M.Ra.*S.current(U_test);
+Udif = U - U_test;
 
 end

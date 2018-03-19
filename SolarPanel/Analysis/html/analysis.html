@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>analysis</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-13"><meta name="DC.source" content="analysis.m"><style type="text/css">
+      --><title>analysis</title><meta name="generator" content="MATLAB 9.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2018-03-14"><meta name="DC.source" content="analysis.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -66,7 +66,7 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Parse excel data</a></li><li><a href="#2">Define constant parameters</a></li><li><a href="#3">Calculate m using best fit curve</a></li><li><a href="#4">Plot!</a></li><li><a href="#5">Function definitions</a></li></ul></div><h2 id="1">Parse excel data</h2><pre class="codeinput">data = xlsread(<span class="string">'readings.xlsx'</span>)
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Parse excel data</a></li><li><a href="#2">Define constant parameters</a></li><li><a href="#3">Calculate m using best fit curve</a></li><li><a href="#4">Plot!</a></li></ul></div><h2 id="1">Parse excel data</h2><pre class="codeinput">data = xlsread(<span class="string">'readings.xlsx'</span>)
 
 shortCircuit = isnan(data);
 a_Isc = data(shortCircuit,:);
@@ -125,11 +125,15 @@ m =
 
     1.2710
 
-</pre><h2 id="4">Plot!</h2><pre class="codeinput">f1 = figure(<span class="string">'Name'</span>,<span class="string">'Solar panel characteristics'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>);
+</pre><h2 id="4">Plot!</h2><pre class="codeinput">sp = SolarPanel(m,Isc)
+
+f1 = figure(<span class="string">'Name'</span>,<span class="string">'Solar panel characteristics'</span>,<span class="string">'NumberTitle'</span>,<span class="string">'off'</span>);
 subplot(2,1,1)
 hold <span class="string">on</span>
 axis([0 10 0 floor(Isc*10)/10+0.1])
-fplot(@(U) current(m,Isc,Is,U,Ur,N))
+U = 0:0.1:10;
+I = sp.current(U);
+plot(U,I)
 plot(data(:,1),data(:,2),<span class="string">'x'</span>)
 title(<span class="string">'Current over voltage'</span>)
 xlabel(<span class="string">'Voltage (V)'</span>);
@@ -141,20 +145,30 @@ subplot(2,1,2)
 
 hold <span class="string">on</span>
 axis([0 10 0 3])
-fplot(@(U) current(m,Isc,Is,U,Ur,N)*U)
+U = 0:0.1:10;
+I = sp.current(U);
+plot(U,I.*U)
 
 title(<span class="string">'Power over voltage'</span>)
 xlabel(<span class="string">'Voltage (V)'</span>)
 ylabel(<span class="string">'Power (W)'</span>)
 plot(data(:,1),power, <span class="string">'x'</span>)
 hold <span class="string">off</span>;
-</pre><img vspace="5" hspace="5" src="analysis_01.png" alt=""> <h2 id="5">Function definitions</h2><pre class="codeinput"><span class="keyword">function</span> I = current(m,Isc,Is,U,Ur,N)
-    I = Isc - Is.*(exp(U./(m.*Ur.*N))-1);
-<span class="keyword">end</span>
-</pre><pre class="codeoutput">Warning: Function behaves unexpectedly on array inputs. To improve performance,
-properly vectorize your function to return an output with the same size and
-shape as the input arguments. 
-</pre><img vspace="5" hspace="5" src="analysis_02.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
+</pre><pre class="codeoutput">
+sp = 
+
+  SolarPanel with properties:
+
+      m: 1.2710
+    Isc: 0.3600
+      k: 1.3800e-23
+      q: 1.6000e-19
+      T: 300
+     Ur: 0.0259
+     Is: 1.0000e-08
+      N: 16
+
+</pre><img vspace="5" hspace="5" src="analysis_01.png" alt=""> <p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2017b</a><br></p></div><!--
 ##### SOURCE BEGIN #####
 %% Parse excel data
 data = xlsread('readings.xlsx')
@@ -179,11 +193,15 @@ fun = @(m)(Isc - Is.*(exp(data(:,1)./(m.*Ur.*N))-1)-data(:,2));
 m = lsqnonlin(fun,1)
 
 %% Plot!
+sp = SolarPanel(m,Isc)
+
 f1 = figure('Name','Solar panel characteristics','NumberTitle','off');
 subplot(2,1,1) 
 hold on
 axis([0 10 0 floor(Isc*10)/10+0.1])
-fplot(@(U) current(m,Isc,Is,U,Ur,N))
+U = 0:0.1:10;
+I = sp.current(U);
+plot(U,I)
 plot(data(:,1),data(:,2),'x')
 title('Current over voltage')
 xlabel('Voltage (V)');
@@ -195,18 +213,14 @@ subplot(2,1,2)
 
 hold on
 axis([0 10 0 3])
-fplot(@(U) current(m,Isc,Is,U,Ur,N)*U)
+U = 0:0.1:10;
+I = sp.current(U);
+plot(U,I.*U)
 
 title('Power over voltage')
 xlabel('Voltage (V)')
 ylabel('Power (W)')
 plot(data(:,1),power, 'x')
 hold off;
-
-%% Function definitions
-function I = current(m,Isc,Is,U,Ur,N)
-    I = Isc - Is.*(exp(U./(m.*Ur.*N))-1);
-end
-
 ##### SOURCE END #####
 --></body></html>
