@@ -25,7 +25,7 @@ dxcur = V(2,1)
  
 %given the current speed (dxcur) calculate the new working point between
 %solar panel and motor
-[Ucur,Icur]=calcCurWp(dxcur,C,S,M)   %function that calculates the new working point
+[Ucur,Icur]=calcCurWp(dxcur,C,S,M);   %function that calculates the new working point
 %using power, calculate the current torque available for car acceleration
 power = Ucur*Icur;
 ang_vel = dxcur/(C.gear_ratio.*C.pulley_radius);
