@@ -17,14 +17,15 @@ plot(U,P, 'Color', [0.5 0.75 1]);
 
 plot([Up,Up], [Pp,Ip], 'ro');
 
-line([Up Up], [0 Pp+1], 'Color', [0.75 0.75 0.75]);
+line([Up Up], [0 Pp+1], 'Color', [0.5 0.5 0.5]);
 
 M = DCmotor();
 Wp = (Up - M.Ra.*Ip)./M.Ke; % Peak angular velocity
 Im=(U-M.emf(Wp))./M.Ra;
-plot(U,Im, 'Color', [1 0 0.25]);
+plot(U,Im, 'Color', [1 0 0.25])
 
 axis([0 10 0 Pp+1])
+title('Solar panel and motor characteristics')
 xlabel('Voltage [V]')
 ylabel('Current [A] / Power [W]')
 legend('Current','Power',num2str([Pp,Ip],'Peak power (%.1f W) and current (%.1f A)'),num2str(Up,'Peak voltage (%.1f V)'),num2str(Wp,'Motor current @ %.1f rad/s'),'location','NorthWest');
