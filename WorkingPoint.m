@@ -1,3 +1,9 @@
+addpath './DCmotor'
+addpath './SolarPanel'
+addpath './Track'
+
+WorkingPointGUI();
+
 function WorkingPointGUI
 % Add the UI components
 hs = addcomponents;
