@@ -21,10 +21,16 @@ function [Uwp,Iwp] = calcCurWp(v,C,S,M)
 %You can do the same with first calculating the Imotor or with some Itest.
 %What would be the advantages/disadvantages of the different approaches? (first Imotor/Ipanel/Umotor/Upanel 
 
+
+
 Uwp = fzero(@(U) calcUdif(U,v,C,S,M),[0 9]);
 Iwp = S.current(Uwp);
 if Iwp < 0
     Iwp = 0;
 end
+
+
+
+
 
 end

@@ -34,15 +34,19 @@ if ang_vel < 0.001
     Tmotor = M.Tms;
 end
 Tpulley = Tmotor./C.gear_ratio;
-Fpulley = Tpulley./C.pulley_radius
+Fpulley = Tpulley./C.pulley_radius;
 
 %using the Tcur, calculate the current acceleration of the car
 slope = T.slope(xcur);
 
 N = C.Mssv.*9.81.*cos(slope);           % Normal force
 Fw = N*C.frc;                           % Friction
-F = abs(Fpulley - C.Mssv.*9.81.*sin(slope) - Fw);
 
+
+
+F = Fpulley - C.Mssv.*9.81.*sin(slope)
+%Fw = min(F,abs(Fw))
+F = F-Fw;
 
 ddxcur = F./C.Mssv;
  

@@ -72,7 +72,7 @@ hs.fig.Visible = 'on';
         title('Solar panel and motor characteristics')
         xlabel('Voltage [V]')
         ylabel('Current [A] / Power [W]')
-        legend('Current','Power',num2str([Pwp,Iwp],'Peak power (%.2f W) and current (%.2f A)'),num2str(Uwp,'Peak voltage (%.2f V)'),num2str(Wp,'Motor current @ %.1f rad/s'),'location','NorthWest');
+        legend('Solar Panel Current','Solar Panel Power',num2str([Pwp,Iwp],'Peak power (%.2f W) and current (%.2f A)'),num2str(Uwp,'Peak voltage (%.2f V)'),num2str(Wp,'Motor current @ %.1f rad/s'),'location','NorthWest');
         grid on
         
         hold off
@@ -83,7 +83,7 @@ hs.fig.Visible = 'on';
         figwidth = hs.fig.Position(3);
         figheight = hs.fig.Position(4);
         
-        edge = 30;
+        edge = 10;
         
         % Set textbox position
         sheight = 20;
@@ -95,11 +95,11 @@ hs.fig.Visible = 'on';
         hs.txtIsc.Position = [sleftedge+1*(swidth+sgap) sbottomedge swidth sheight];
         hs.lblVo.Position = [sleftedge+2*(swidth+sgap) sbottomedge swidth sheight];
         hs.txtVo.Position = [sleftedge+3*(swidth+sgap) sbottomedge swidth sheight];
-
+        
         
         % Set axes position
-        axtray = 20;
-        axheight = figheight - 2 * edge - sheight - edge - axtray;
+        axtray = 40;
+        axheight = figheight - 2 * edge - sheight - 2 * axtray;
         axbottomedge = max(0,edge + sheight + edge + axtray);
         axleftedge = edge + axtray;
         axwidth = max(0,figwidth - 2 * edge - axtray);

@@ -22,9 +22,10 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 1;             % [kg] mass of the SSV
-car.gear_ratio = 0.2;        % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 0.005;        % [] gear ratio: input/output   (motor speed /wheel axel speed)
 car.frc = 0.3;              % Friction coef
-car.pulley_radius = 0.025;
+car.pulley_radius = 0.1;
+car.voltage_offset = -0.2;
 
 panel = SolarPanel(1.271,0.36);
 
@@ -39,7 +40,7 @@ dx0 = 0;  %[m/s]
 
  
 %call the ode45 function in order to solve the differential equation problem
-endTime = 5; %[sec] overall time you want the simulation to run for 
+endTime = 100; %[sec] overall time you want the simulation to run for 
 %e.g. simulate the movement of the car from 0 to 10 sec
 [timeOut,Pout]=ode45(@(t,P) difEqCar(t,P,car,panel,motor,track),[0 endTime],[x0 dx0]);
 %using ode45 to numerically solve the differential equations from time 0 to
@@ -56,11 +57,12 @@ endTime = 5; %[sec] overall time you want the simulation to run for
 %e.g.
 f1=figure;  %create a new figure which is referred to as f1
 subplot(2,1,1)
-plot(timeOut,Pout(:,1))  %creates of plot of the position of the car as a function of time, (all rows first column is selected for Xout)
+plot(Pout(:,1),timeOut)  %creates of plot of the position of the car as a function of time, (all rows first column is selected for Xout)
 grid on;
-title('position of the car on the track over time')
-xlabel('time [sec]')
-ylabel('position [m]')
+axis([0 7 0 inf])
+title('time over position of the car on the track')
+xlabel('position [m]')
+ylabel('time [sec]')
 
 subplot(2,1,2)
 plot(Pout(:,1),Pout(:,2)) 

@@ -8,6 +8,7 @@ classdef SolarPanel
         Ur=0.0259;          % Thermal voltage [V]
         Is=1*10^(-8);       % Reverse saturation current [A]
         N=16;               % Amount of solar cells
+        Voc = 9.47;
     end
     
     methods
