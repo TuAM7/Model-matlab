@@ -16,7 +16,8 @@ function Udif = calcUdif(U_test,v,C,S,M)
 %M:     structure containing parameters of the motor
 
 U_test;
-ang_vel = v./(C.gear_ratio.*C.pulley_radius);
+ang_vel = (v.*C.gear_ratio)./(C.pulley_radius); % of motor
+
 
 Iwp = S.current(U_test);
 Umotor=(U_test - M.Ra.*Iwp)./M.Ke;
