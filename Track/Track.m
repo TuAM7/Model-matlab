@@ -38,6 +38,7 @@ classdef Track
                     S(i) = 0;
                 end
             end
+            S = S.*(obj.bumpHeight/0.4);
             S = atan(S);
         end
     end
