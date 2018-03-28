@@ -29,31 +29,25 @@ dxcur = V(2,1);
 %using power, calculate the current torque available for car acceleration
 power = Ucur*Icur;
 
-Tmotor = (Icur-0.021)*0.0232/(1.8-0.021);
-ang_vel=Tmotor/power;
-
+ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
+Tmotor = power/ang_vel;
 if ang_vel < eps
     Tmotor = M.Tms;
 end
+Tpulley = Tmotor./C.gear_ratio;
+Fpulley = Tpulley./C.pulley_radius;
 
 %using the Tcur, calculate the current acceleration of the car
 slope = T.slope(xcur);
 
 N = C.Mssv.*9.81.*cos(slope);           % Normal force
+Fw = N*C.frc;                           % Friction
 
-Fwx=C.frc*N.*sin(slope);
-Fwy=C.frc*N.*cos(slope);
-Fw=sqrt(Fwx^2+Fwy^2); % Friction
-Fw = max(0,Fw);
 
-Fx=Fwx; %%sum of x direction forces [N]
-Fy=Fwy-C.Mssv*9.81; %%sum of y direction forces [N]
-F=sqrt(Fx^2+Fy^2); %%Force
 
-Tpulley=F.*C.pulley_radius; %% torque pulley                    
-GR=Tmotor/Tpulley %%gear ratio
+F = Fpulley - C.Mssv.*9.81.*sin(slope);
+F = max(0,F-Fw);
 
-ang_vel = (GR.*dxcur)/(C.pulley_radius);
 ddxcur = F./C.Mssv;
 
  
