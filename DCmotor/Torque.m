@@ -38,7 +38,7 @@ for j=1:1:sE
     plot(Ua,sp(Ua),'-k','linewidth',lw) %% solar panel plot
     grid;
     
-    u=[u,u1]; %%U value at intersection points
+    u=[u,u1] %%U value at intersection points
 end
 hold off
 dcm(u); %% I value at intersection

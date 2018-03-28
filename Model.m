@@ -22,25 +22,23 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 0.9;        % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 0.16;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 car.frc = 0.3;                % Friction coef
-car.pulley_radius = 0.01;
+car.pulley_radius = 0.025;
 car.voltage_offset = -0.2;
 
-panel = SolarPanel(1.271,0.36);
+panel = SolarPanel(1.271,0.69);
 
 motor = DCmotor();
 
 track = Track(3, 2.2, 0.4);
 
-
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]
 dx0 = 0;  %[m/s]
-
  
 %call the ode45 function in order to solve the differential equation problem
-endTime = 10; %[sec] overall time you want the simulation to run for 
+endTime = 50; %[sec] overall time you want the simulation to run for 
 %e.g. simulate the movement of the car from 0 to 10 sec
 [timeOut,Pout]=ode45(@(t,P) difEqCar(t,P,car,panel,motor,track),[0 endTime],[x0 dx0]);
 %using ode45 to numerically solve the differential equations from time 0 to

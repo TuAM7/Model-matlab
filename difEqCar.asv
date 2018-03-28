@@ -28,24 +28,40 @@ dxcur = V(2,1);
 [Ucur,Icur]=calcCurWp(dxcur,C,S,M);   %function that calculates the new working point
 %using power, calculate the current torque available for car acceleration
 power = Ucur*Icur;
-ang_vel = dxcur/(C.gear_ratio.*C.pulley_radius);
-Tmotor = M.torque;
+ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
+Tmotor = (Icur-0.021)*0.0232/(1.8-0.021);
 if ang_vel < eps
     Tmotor = M.Tms;
 end
 Tpulley = Tmotor./C.gear_ratio;
-Fpulley = Tpulley./C.pulley_radius;
+Fpulley = Tpulley./C.pulley_radius
 
 %using the Tcur, calculate the current acceleration of the car
 slope = T.slope(xcur);
 
 N = C.Mssv.*9.81.*cos(slope);           % Normal force
+
+
+Fwx=C.frc*N.*sin(slope);
+Ffy=C.frc*N.*cos(slope);
+Ff=sqrt(Ffx^2+Ffy^2); 
+
+Fx=Ffx; %%sum of x direction forces [N]
+Fy=Ffy-G; %%sum of y direction forces [N]
+F=sqrt(Fx^2+Fy^2) %%minimal force for steady state [N] - we need to know what speed we want to achieve
+
+Tw=F*rw; %% torque needed [Nm]
+
+
+
+
+
+
+
 Fw = N*C.frc;                           % Friction
-
-
-
+Fw = max(0,Fw);
 F = Fpulley - C.Mssv.*9.81.*sin(slope);
-F = F-Fw;
+F=F-Fw;
 
 ddxcur = F./C.Mssv;
 

@@ -41,7 +41,7 @@ hs.fig.Visible = 'on';
         Isc = str2double(get(hs.txtIsc,'String'));
         Vo = str2double(get(hs.txtVo,'String'));
         
-        U = 0:0.01:10;
+        U = 0:0.001:10;
         
         sp = SolarPanel(1.271, Isc);
         
@@ -64,7 +64,7 @@ hs.fig.Visible = 'on';
         line([Uwp Uwp], [0 Pp+1], 'Color', [0.5 0.5 0.5]);
         
         M = DCmotor();
-        Wp = (Uwp - M.Ra.*Iwp)./M.Ke; % Peak angular velocity
+        Wp = (Uwp - M.Ra.*Iwp)./M.Ke % Peak angular velocity
         Im=(U-M.emf(Wp))./M.Ra;
         plot(U,Im, 'Color', [1 0 0.25])
         
