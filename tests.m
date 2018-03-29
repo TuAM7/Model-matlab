@@ -1,25 +1,26 @@
 %%
-
-<<<<<<< HEAD
+addpath ./DCmotor
+addpath ./SolarPanel
+addpath ./Track
 
 C.Mssv = 0.3;               % [kg] mass of the SSV
 C.gear_ratio =5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 C.frc = 0.3;                % Friction coef
 C.pulley_radius = 0.025;
 C.voltage_offset = -0.2;
-=======
+
 car.Mssv = 0.3;               % [kg] mass of the SSV
 car.gear_ratio = 0.14;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
 car.voltage_offset = -0.2;
->>>>>>> 6ef2f91e216636382e2dd2ab6dbc28624ad6d21b
+
 
 panel = SolarPanel(1.271,0.69);
 
 motor = DCmotor();
 
-track = Track(6, 2.2, 0.4);
+track = Track(3, 2.2, 0.4);
 
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]

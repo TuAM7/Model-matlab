@@ -22,12 +22,9 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-<<<<<<< HEAD
 
-car.gear_ratio = 0.1442;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
-=======
 car.gear_ratio = 8;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
->>>>>>> 6ef2f91e216636382e2dd2ab6dbc28624ad6d21b
+
 
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;

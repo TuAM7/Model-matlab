@@ -50,7 +50,7 @@ Tpulley = Tmotor.*C.gear_ratio;
 Fpulley = Tpulley./C.pulley_radius;
 
 %using the Tcur, calculate the current acceleration of the car
-slope = T.slope(xcur);
+slope = T.slope(xcur)
 
 N = C.Mssv.*9.81.*cos(slope);           % Normal force
 Fw = N*C.frc;                           % Friction
