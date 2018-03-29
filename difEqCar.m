@@ -37,15 +37,6 @@ if ang_vel < eps
    Tmotor = M.Tms;
 end
 
-global OMEGA iter;
-
-OMEGA(iter,1) = xcur;
-OMEGA(iter,2) = ang_vel;
-iter = iter + 1;
-
-
-
-
 Tpulley = Tmotor.*C.gear_ratio;
 Fpulley = Tpulley./C.pulley_radius;
 
