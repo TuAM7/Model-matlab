@@ -29,13 +29,16 @@ dxcur = V(2,1);
 %using power, calculate the current torque available for car acceleration
 power = Ucur*Icur;
 
+global h;
+set(h, ''
+
 ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
-Tmotor = -(M.Tms/9970*2*pi/60)*ang_vel+M.Tms;
+Tmotor = -(M.Tms/9970*2*pi/60)*ang_vel+M.Tms
 
 if ang_vel < eps
     Tmotor = M.Tms;
 end
-Tpulley = Tmotor.*C.gear_ratio;
+Tpulley = Tmotor./C.gear_ratio;
 Fpulley = Tpulley./C.pulley_radius;
 
 %using the Tcur, calculate the current acceleration of the car
