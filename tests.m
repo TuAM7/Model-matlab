@@ -28,7 +28,7 @@ legend('velocity')
 
 
 C.Mssv = 0.3;               % [kg] mass of the SSV
-C.gear_ratio = 5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+C.gear_ratio =5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 C.frc = 0.3;                % Friction coef
 C.pulley_radius = 0.025;
 C.voltage_offset = -0.2;
