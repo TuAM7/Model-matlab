@@ -5,7 +5,7 @@ Ra=3.32; %%Terminal Resistance [Ohm]
 w_nl=9630*2*pi/60; %%no load speed [rad/s] ~1000 rad/s
 
 Ua=0:0.00001:10;
-n=250; %% increment of the rotational speed in foor loops
+n=150; %% increment of the rotational speed in foor loops
 
 %%Calculating counter Emf for different w
 dc= DCmotor(); 

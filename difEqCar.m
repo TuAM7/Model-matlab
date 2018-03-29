@@ -30,9 +30,9 @@ dxcur = V(2,1);
 power = Ucur*Icur;
 
 ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
-Tmotor = power/ang_vel;
+Tmotor = -(M.Tms/9970*2*pi/60)*ang_vel+M.Tms;
 if ang_vel < eps
-    Tmotor = M.Tms;
+   Tmotor = M.Tms;
 end
 Tpulley = Tmotor./C.gear_ratio;
 Fpulley = Tpulley./C.pulley_radius;
@@ -46,7 +46,8 @@ Fw = N*C.frc;                           % Friction
 
 
 F = Fpulley - C.Mssv.*9.81.*sin(slope);
-F = max(0,F-Fw);
+F=F-Fw;
+%%F = max(0,F-Fw);
 
 ddxcur = F./C.Mssv;
 

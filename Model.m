@@ -22,16 +22,16 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 0.13;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 0.1442;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
-car.voltage_offset = -0.2;
+car.voltage_offset = -0.1;
 
 panel = SolarPanel(1.271,0.69);
 
 motor = DCmotor();
 
-track = Track(3, 2.2, 0);
+track = Track(3, 2.2, 0.4);
 
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]
