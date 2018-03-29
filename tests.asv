@@ -28,7 +28,7 @@ legend('velocity')
 
 
 C.Mssv = 0.3;               % [kg] mass of the SSV
-C.gear_ratio = 5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+C.gear_ratio = 0;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 C.frc = 0.3;                % Friction coef
 C.pulley_radius = 0.025;
 C.voltage_offset = -0.2;
@@ -39,14 +39,9 @@ motor = DCmotor();
 
 track = Track(3, 2.2, 0.4);
 
-U = []
-I = []
+vel = 5;
 
-for v = 0:0.1:4
-    [Ucur,Icur]=calcCurWp(v,C,panel,motor);
-    U = [U;Ucur];
-end
-plot(0:0.1:4,U);
+[Ucur,Icur]=calcCurWp(vel,C,panel,motor)
 
 %%
 

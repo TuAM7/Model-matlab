@@ -35,3 +35,5 @@ GR=Tm./Tp %%gear ratio wheel torque/motor torque [-]
 
 rmotor=0.01; %% radius of the gear on motor shaft [m] ?????
 Fm=Tm/rmotor; %%motor force [N]
+
+plot(x,GR);

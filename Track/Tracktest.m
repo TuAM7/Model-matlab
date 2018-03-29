@@ -21,7 +21,7 @@ ylabel('height (m)');
 title('Track height');
 
 subplot(2,3,[5,6]) 
-fplot(@(x) track.slope(x),[0,trackLength]);
+fplot(@(x) rad2deg(track.slope(x)),[0,trackLength]);
 ylim([0 inf]);
 xlabel('position (m)');
 ylabel('slope (radians)');
