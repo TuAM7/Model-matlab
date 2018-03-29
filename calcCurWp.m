@@ -25,6 +25,8 @@ function [Uwp,Iwp] = calcCurWp(v,C,S,M)
 
 Uwp = fzero(@(U) calcUdif(U,v,C,S,M),[0 9]);
 Iwp = S.current(Uwp);
+
+
 if Iwp < 0
     Iwp = 0;
 end

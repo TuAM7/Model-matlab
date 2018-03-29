@@ -22,7 +22,7 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 0.1442;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 6;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
@@ -32,18 +32,20 @@ panel = SolarPanel(1.271,0.69);
 
 motor = DCmotor();
 
-track = Track(3, 2.2, 0.4)
+track = Track(3, 2.2, 0.4);
 
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]
 dx0 = 0;  %[m/s]
 
-
-
 %call the ode45 function in order to solve the differential equation problem
-endTime = 50; %[sec] overall time you want the simulation to run for 
+%endTime = 50; %[sec] overall time you want the simulation to run for 
 
-time = 0:0.01:10;
+time = 0:0.01:5;
+
+global OMEGA iter;
+iter = 1;
+OMEGA = [];
 
 %e.g. simulate the movement of the car from 0 to 10 sec
 [timeOut,Pout]=ode45(@(t,P) difEqCar(t,P,car,panel,motor,track),time,[x0 dx0]);
@@ -54,11 +56,11 @@ time = 0:0.01:10;
 %function (which in this case is called difEqCar)
 %timeOut will hold all the time points for which an output Xout is provided
 %Pout holds the position and speed of the car for all times in timeOut
- 
+
 %post processing of the results
 %e.g.
 % 
-% f1=figure;  %create a new figure which is referred to as f1
+f1=figure;  %create a new figure which is referred to as f1
 % subplot(2,1,1)
 % yyaxis left
 % plot(timeOut,Pout(:,1))
@@ -83,7 +85,16 @@ title('Position analysis')
 xlabel('position [m]')
 ylabel('velocity [m/s]')
  
- 
+
+OMEGA = sortrows(OMEGA,1);
+figure;
+plot(OMEGA(:,1),OMEGA(:,2))
+xlim([0 7])
+title('Angular velocity')
+xlabel('Time [s]')
+ylabel('Angular velocity [rad/s]')
+grid on;
+
 %some more processing to return the time the car needed to reach the end of
 %the track.  To be done using interpolation of the Xout and timeOut results
  
