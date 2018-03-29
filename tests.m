@@ -1,10 +1,12 @@
 %%
 
-car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 0.14;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
-car.frc = 0.3;                % Friction coef
-car.pulley_radius = 0.025;
-car.voltage_offset = -0.2;
+
+C.Mssv = 0.3;               % [kg] mass of the SSV
+C.gear_ratio =5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+C.frc = 0.3;                % Friction coef
+C.pulley_radius = 0.025;
+C.voltage_offset = -0.2;
+
 
 panel = SolarPanel(1.271,0.69);
 
