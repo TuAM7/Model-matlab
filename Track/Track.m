@@ -20,11 +20,13 @@ classdef Track
                 elseif x(i) < obj.bumpStart + 0.8
                     H(i) = polyval(p,x(i)-obj.bumpStart);
                 elseif x(i) < obj.bumpStart + obj.bumpLength - 0.8
-                    H(i) = obj.bumpHeight;
+                    H(i) = 0.4;
                 else
                     H(i) = polyval(p,-x(i)+obj.bumpStart+obj.bumpLength);
                 end
             end
+            
+            H = H.*(obj.bumpHeight/0.4);
         end
         function S = slope(obj,x)
             S = zeros(size(x));

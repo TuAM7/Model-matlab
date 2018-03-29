@@ -24,6 +24,32 @@ xlabel('Distance')
 legend('velocity')
 
 
+%%
+
+
+C.Mssv = 0.3;               % [kg] mass of the SSV
+C.gear_ratio = 5;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+C.frc = 0.3;                % Friction coef
+C.pulley_radius = 0.025;
+C.voltage_offset = -0.2;
+
+panel = SolarPanel(1.271,0.69);
+
+motor = DCmotor();
+
+track = Track(3, 2.2, 0.4);
+
+U = []
+I = []
+
+for v = 0:0.1:4
+    [Ucur,Icur]=calcCurWp(v,C,panel,motor);
+    U = [U;Ucur];
+end
+plot(0:0.1:4,U);
+
+%%
+
 function dX = car(x, X, track)
     P = 1; % motor force
     F = P - 0.3*9.81*sin(track.slope(x));
@@ -31,3 +57,4 @@ function dX = car(x, X, track)
     dX(1,1) = X(2,1);  % speed is the derivative of position
     dX(2,1) = a;       % acceleration is the derivative of speed
 end
+

@@ -22,7 +22,11 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
+<<<<<<< HEAD
 car.gear_ratio = 0.1442;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+=======
+car.gear_ratio = 0.19;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+>>>>>>> 20e10631506b1bdfed3a8c50a0ddf3a02fca7cc9
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
 car.voltage_offset = -0.1;
@@ -84,3 +88,7 @@ ylabel('velocity [m/s]')
 %define and create multiple files that generate different
 %output values/graphs
 %%
+
+GR = 0.08:0.01:0.19;
+
+
