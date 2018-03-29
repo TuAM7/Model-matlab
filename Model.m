@@ -22,7 +22,7 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 6;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 8;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
@@ -86,14 +86,15 @@ xlabel('position [m]')
 ylabel('velocity [m/s]')
  
 
-OMEGA = sortrows(OMEGA,1);
-figure;
-plot(OMEGA(:,1),OMEGA(:,2))
-xlim([0 7])
-title('Angular velocity')
-xlabel('Time [s]')
-ylabel('Angular velocity [rad/s]')
-grid on;
+
+% OMEGA = sortrows(OMEGA,1);
+% figure;
+% plot(OMEGA(:,1),OMEGA(:,2))
+% xlim([0 7])
+% title('Angular velocity')
+% xlabel('Time [s]')
+% ylabel('Angular velocity [rad/s]')
+% grid on;
 
 %some more processing to return the time the car needed to reach the end of
 %the track.  To be done using interpolation of the Xout and timeOut results
