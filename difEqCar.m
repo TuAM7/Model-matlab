@@ -22,19 +22,31 @@ function dV = difEqCar(t,V,C,S,M,T)
 xcur  = V(1,1);
 dxcur = V(2,1);
  
- 
+
 %given the current speed (dxcur) calculate the new working point between
 %solar panel and motor
 [Ucur,Icur]=calcCurWp(dxcur,C,S,M);   %function that calculates the new working point
 %using power, calculate the current torque available for car acceleration
 power = Ucur*Icur;
 
-ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
-Tmotor = -(M.Tms/9970*2*pi/60)*ang_vel+M.Tms;
+ang_vel = (C.gear_ratio.*dxcur)./(C.pulley_radius);
+
+Tmotor = M.torque(Icur);
+
 if ang_vel < eps
    Tmotor = M.Tms;
 end
-Tpulley = Tmotor./C.gear_ratio;
+
+global OMEGA iter;
+
+OMEGA(iter,1) = xcur;
+OMEGA(iter,2) = ang_vel;
+iter = iter + 1;
+
+
+
+
+Tpulley = Tmotor.*C.gear_ratio;
 Fpulley = Tpulley./C.pulley_radius;
 
 %using the Tcur, calculate the current acceleration of the car

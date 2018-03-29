@@ -20,8 +20,8 @@ ang_vel = (v.*C.gear_ratio)./(C.pulley_radius); % of motor
 
 
 Iwp = S.current(U_test);
-%Umotor=(U_test - M.Ra.*Iwp)./M.Ke;
-Umotor=M.emf(ang_vel);
+Umotor=(U_test - M.Ra.*Iwp)./M.Ke;
+%Umotor=M.emf(ang_vel);
 
 Udif = Umotor - U_test;
 
