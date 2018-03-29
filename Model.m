@@ -22,7 +22,7 @@ clc
 %!values have to be changed but variable names have to remain identical
 
 car.Mssv = 0.3;               % [kg] mass of the SSV
-car.gear_ratio = 8;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
+car.gear_ratio = 10;         % [] gear ratio: input/output   (motor speed /wheel axel speed)
 
 car.frc = 0.3;                % Friction coef
 car.pulley_radius = 0.025;
@@ -32,7 +32,7 @@ panel = SolarPanel(1.271,0.69);
 
 motor = DCmotor();
 
-track = Track(3, 2.2, 0.4);
+track = Track(0, 2.2, 0.4);
 
 %set initial position and speed of the car on the track
 x0 = 0;   %[m]
@@ -43,9 +43,6 @@ dx0 = 0;  %[m/s]
 
 time = 0:0.01:5;
 
-global OMEGA iter;
-iter = 1;
-OMEGA = [];
 
 %e.g. simulate the movement of the car from 0 to 10 sec
 [timeOut,Pout]=ode45(@(t,P) difEqCar(t,P,car,panel,motor,track),time,[x0 dx0]);
@@ -87,14 +84,6 @@ ylabel('velocity [m/s]')
  
 
 
-% OMEGA = sortrows(OMEGA,1);
-% figure;
-% plot(OMEGA(:,1),OMEGA(:,2))
-% xlim([0 7])
-% title('Angular velocity')
-% xlabel('Time [s]')
-% ylabel('Angular velocity [rad/s]')
-% grid on;
 
 %some more processing to return the time the car needed to reach the end of
 %the track.  To be done using interpolation of the Xout and timeOut results
