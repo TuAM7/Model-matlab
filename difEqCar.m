@@ -31,10 +31,7 @@ power = Ucur*Icur;
 
 ang_vel = (C.gear_ratio.*dxcur)/(C.pulley_radius);
 Tmotor = -(M.Tms/9970*2*pi/60)*ang_vel+M.Tms;
-<<<<<<< HEAD
 
-=======
->>>>>>> 60522a1993fe571f0147228737825a159518b823
 if ang_vel < eps
    Tmotor = M.Tms;
 end
